@@ -84,8 +84,11 @@ public class Main extends JavaPlugin {
         savedInventories.clear();
     }
 
+    public String getVersion(){
+        return getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+    }
     private boolean loadSpigotVersionSupport() {
-        String nmsVersion = getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        String nmsVersion = getVersion();
         String usingVersion;
         if(nmsVersion.startsWith("v1_4")  || nmsVersion.startsWith("v1_5")  || nmsVersion.startsWith("v1_6") ||
            nmsVersion.startsWith("v1_7")  || nmsVersion.startsWith("v1_8")  || nmsVersion.startsWith("v1_9") ||
@@ -172,7 +175,8 @@ public class Main extends JavaPlugin {
             p.sendMessage(ChatColor.RED + Config.noAirError);
             return;
         }
-        b.setType(Material.SIGN);
+        Material matSign = getVersion().startsWith("v1_16") ? Material.valueOf("ACACIA_SIGN") : Material.valueOf("SIGN");
+        b.setType(matSign);
         nms.openSign(p, b);
         b.setMetadata("armorStand", new FixedMetadataValue(this, as.getUniqueId()));
         b.setMetadata("setName", new FixedMetadataValue(this, true));
@@ -184,7 +188,8 @@ public class Main extends JavaPlugin {
             p.sendMessage(ChatColor.RED + Config.noAirError);
             return;
         }
-        b.setType(Material.SIGN);
+        Material matSign = getVersion().startsWith("v1_16") ? Material.valueOf("ACACIA_SIGN") : Material.valueOf("SIGN");
+        b.setType(matSign);
         nms.openSign(p, b);
         b.setMetadata("armorStand", new FixedMetadataValue(this, as.getUniqueId()));
         b.setMetadata("setSkull", new FixedMetadataValue(this, true));
